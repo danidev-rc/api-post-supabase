@@ -1,0 +1,31 @@
+POST http://localhost:4000/api/login
+Content-Type: application/json
+
+{
+  "email" : "user3@gmail.com",
+  "password" : "user123"
+}
+###
+POST http://localhost:4000/api/register
+Content-Type: application/json
+
+{
+  "username": "user3",
+  "email": "user3@gmail.com",
+  "password": "user123"
+}
+###
+POST http://localhost:4000/api/logout
+
+###
+GET http://localhost:4000/api/posts/
+###
+POST http://localhost:4000/api/posts
+Content-Type: application/json
+
+{
+  "title": "Nuevo Post 222",
+  "description": "Descripción del nuevo post 222",
+  "date": "2023-10-10T00:00:00.000Z"
+}
+###

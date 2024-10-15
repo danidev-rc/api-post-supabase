@@ -42,3 +42,18 @@ Content-Type: application/json
   "date": "2023-10-10T00:00:00.000Z"
 }
 ###
+
+POST https://api-post-supabase.onrender.com/api/login
+###
+POST https://api-post-supabase.onrender.com/api/register
+Content-Type: application/json
+
+{
+  "username": "user3",
+  "email": "user3@gmail.com",
+  "password": "user123"
+}
+###
+POST https://api-post-supabase.onrender.com/api/logout
+###
+GET https://api-post-supabase.onrender.com/api/posts

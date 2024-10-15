@@ -19,7 +19,7 @@ app.use(cors(
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(cookieParser())
-app.use('/api', authRoutes)
-app.use('/api', postsRoutes)
+app.use('/', authRoutes)
+app.use('/', postsRoutes)
 
 export default app

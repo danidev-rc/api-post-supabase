@@ -2,9 +2,11 @@ POST http://localhost:4000/api/login
 Content-Type: application/json
 
 {
-  "email" : "user2@gmail.com",
+  "email" : "user1@gmail.com",
   "password" : "user123"
 }
+###
+GET http://localhost:4000/api/profile/
 ###
 POST http://localhost:4000/api/register
 Content-Type: application/json

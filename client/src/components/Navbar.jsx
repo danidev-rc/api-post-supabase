@@ -26,7 +26,7 @@ function Navbar() {
                   to='/add-post'
                   className='bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium transition-colors'
                 >
-                  Add POST
+                  ADD POST
                 </Link>
               </li>
               <li>

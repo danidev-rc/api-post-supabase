@@ -13,10 +13,12 @@ export default function PostsPage() {
     return <h1 className='text-white text-3xl'>No POSTS</h1>;
 
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-      {posts.map((post) => (
-        <PostsCard key={post.id} post={post} />
-      ))}
+    <div className='px-4 '>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+        {posts.map((post) => (
+          <PostsCard key={post.id} post={post} />
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { usePosts } from "../context/PostsContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 
 import dayjs from "dayjs";
@@ -41,7 +41,7 @@ export default function PostFormPage() {
 
   return (
     <div className='flex h-[calc(100vh-100px)] items-center justify-center'>
-      <div className='bg-zinc-800 max-w-md w-full p-10 rounded-md'>
+      <div className='bg-zinc-800 max-w-md w-full p-10 rounded-md text-white'>
         <form onSubmit={onSubmit}>
           <label htmlFor='title'>Title</label>
           <input
@@ -63,9 +63,15 @@ export default function PostFormPage() {
           <input
             type='date'
             {...register("date")}
-            className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
+            className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2 '
           />
-          <button className='bg-indigo-500 px-3 py-1 rounded-md'>Save</button>
+          <div className='mt-6 flex justify-center items-center gap-6'>
+            <button className='bg-indigo-500 px-5 py-2 rounded-md'>SAVE</button>
+
+            <button className='bg-red-600 px-5 py-2 rounded-md'>
+              <Link to={"/posts"}>CANCEL</Link>
+            </button>
+          </div>
         </form>
       </div>
     </div>

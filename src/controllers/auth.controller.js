@@ -4,7 +4,6 @@ import { createAccessToken } from '../libs/jwt.js'
 import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
-// Controlador para registrar un usuario
 export const register = async (req, res) => {
   const { email, password, username } = req.body
 
@@ -41,7 +40,6 @@ export const register = async (req, res) => {
   }
 }
 
-// Controlador para iniciar sesión
 export const login = async (req, res) => {
   const { email, password } = req.body
 
@@ -75,13 +73,11 @@ export const login = async (req, res) => {
   }
 }
 
-// Controlador para cerrar sesión
 export const logout = (req, res) => {
   res.clearCookie('token')
   res.json({ message: 'Logout' })
 }
 
-// Controlador profile
 export const profile = async (req, res) => {
   const token = req.cookies.token
 
@@ -107,7 +103,6 @@ export const profile = async (req, res) => {
   }
 }
 
-// Controlador para verifcar token
 export const verifyToken = async (req, res) => {
   const token = req.cookies.token
 
@@ -122,4 +117,3 @@ export const verifyToken = async (req, res) => {
     res.status(401).json(['Unauthorized'])
   }
 }
-

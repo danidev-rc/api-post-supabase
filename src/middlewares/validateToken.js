@@ -8,11 +8,13 @@ export const authRequired = (req, res, next) => {
     return res.status(401).json({ message: 'No token, authorization denied' })
   }
 
-  jwt.verify(token, TOKEN_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Invalid token' })
-  //  se agrego user.id => por user
-    req.user = user.id
+  jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: 'Invalid token' })
+    }
 
+    // Asignamos el ID de usuario al req.userId en lugar de sobrescribir req.user
+    req.userId = decoded.id
     next()
   })
 }

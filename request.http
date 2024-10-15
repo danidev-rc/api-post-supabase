@@ -2,7 +2,7 @@ POST http://localhost:4000/api/login
 Content-Type: application/json
 
 {
-  "email" : "user3@gmail.com",
+  "email" : "user2@gmail.com",
   "password" : "user123"
 }
 ###
@@ -10,8 +10,8 @@ POST http://localhost:4000/api/register
 Content-Type: application/json
 
 {
-  "username": "user3",
-  "email": "user3@gmail.com",
+  "username": "user2",
+  "email": "user2@gmail.com",
   "password": "user123"
 }
 ###
@@ -20,12 +20,23 @@ POST http://localhost:4000/api/logout
 ###
 GET http://localhost:4000/api/posts/
 ###
+PUT http://localhost:4000/api/posts/4
+Content-Type: application/json
+
+{
+  "title": "Post Actualizado",
+  "description": "Descripción del post actualizado",
+  "date": "2023-10-10T00:00:00.000Z"
+}
+###
+DELETE http://localhost:4000/api/posts/6
+###
 POST http://localhost:4000/api/posts
 Content-Type: application/json
 
 {
-  "title": "Nuevo Post 222",
-  "description": "Descripción del nuevo post 222",
+  "title": "Nuevo Post 2",
+  "description": "Descripción del nuevo post 2",
   "date": "2023-10-10T00:00:00.000Z"
 }
 ###

@@ -4,7 +4,7 @@ export const getPosts = async (req, res) => {
   try {
     const posts = await prisma.post.findMany({
       where: {
-        authorId: req.userId
+        authorId: req.userId // Aquí usamos req.userId en lugar de req.user
       },
       include: {
         author: true
@@ -26,7 +26,7 @@ export const createPost = async (req, res) => {
         title,
         description,
         date,
-        authorId: req.user.id
+        authorId: req.userId // Usamos req.userId
       }
     })
     res.json(newPost)

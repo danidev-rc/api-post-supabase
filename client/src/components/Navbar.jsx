@@ -16,11 +16,13 @@ function Navbar() {
         <ul className='flex items-center space-x-4'>
           {isAuthenticated ? (
             <>
-              <img
-                src='https://avatars.dicebear.com/api/avataaars/seed.svg'
-                alt='useravatar'
-                className='w-8 h-8 rounded-full bg-white shadow-md '
-              />
+              <Link to={"/profile"}>
+                <img
+                  src='https://avatars.dicebear.com/api/avataaars/seed.svg'
+                  alt='useravatar'
+                  className='w-8 h-8 rounded-full bg-white shadow-md '
+                />
+              </Link>
               <li>
                 <Link
                   to='/add-post'

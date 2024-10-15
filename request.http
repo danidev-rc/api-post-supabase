@@ -43,7 +43,13 @@ Content-Type: application/json
 }
 ###
 
-POST https://api-post-supabase.onrender.com/api/login
+POST https://api-post-supabase.onrender.com/login
+Content-Type: application/json
+
+{
+  "email" : "user1@gmail.com",
+  "password" : "user123"
+}
 ###
 POST https://api-post-supabase.onrender.com/api/register
 Content-Type: application/json

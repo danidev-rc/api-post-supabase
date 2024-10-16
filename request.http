@@ -51,7 +51,7 @@ Content-Type: application/json
   "password" : "user123"
 }
 ###
-POST https://api-post-supabase.onrender.com/api/register
+POST https://api-post-supabase.onrender.com/register
 Content-Type: application/json
 
 {
@@ -60,6 +60,6 @@ Content-Type: application/json
   "password": "user123"
 }
 ###
-POST https://api-post-supabase.onrender.com/api/logout
+POST https://api-post-supabase.onrender.com/logout
 ###
-GET https://api-post-supabase.onrender.com/api/posts
+GET https://api-post-supabase.onrender.com/posts

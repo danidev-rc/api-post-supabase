@@ -43,15 +43,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signin = async (data) => {
+  const signin = async (user) => {
     try {
-      const res = await loginRequest(data);
-      Cookies.set("token", res.data.token);
+      const res = await loginRequest(user);
       setIsAuthenticated(true);
-      setUser(res.data.user);
+      setUser(res.data);
     } catch (error) {
-      setIsAuthenticated(false);
-      setUser(null);
+      if (Array.isArray(error.response.data)) {
+        return setErrors(error.response.data);
+      }
       setErrors(error.response.data.message);
     }
   };

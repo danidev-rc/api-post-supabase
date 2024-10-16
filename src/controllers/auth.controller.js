@@ -4,6 +4,13 @@ import { createAccessToken } from '../libs/jwt.js'
 import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
+const getCookieOptions = () => ({
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // esto es para que funcionenen tanto en produccion como en desarrollo
+  maxAge: 3600000
+})
+
 export const register = async (req, res) => {
   const { email, password, username } = req.body
 
@@ -27,12 +34,7 @@ export const register = async (req, res) => {
 
     const token = await createAccessToken({ id: newUser.id })
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
-      maxAge: 3600000
-    })
+    res.cookie('token', token, getCookieOptions())
     res.json({
       id: newUser.id,
       username: newUser.username,
@@ -65,12 +67,7 @@ export const login = async (req, res) => {
 
     const token = await createAccessToken({ id: user.id })
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
-      maxAge: 3600000
-    })
+    res.cookie('token', token, getCookieOptions())
 
     res.json({
       id: user.id,

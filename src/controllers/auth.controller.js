@@ -27,7 +27,12 @@ export const register = async (req, res) => {
 
     const token = await createAccessToken({ id: newUser.id })
 
-    res.cookie('token', token)
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+      maxAge: 3600000
+    })
     res.json({
       id: newUser.id,
       username: newUser.username,
@@ -60,7 +65,13 @@ export const login = async (req, res) => {
 
     const token = await createAccessToken({ id: user.id })
 
-    res.cookie('token', token)
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+      maxAge: 3600000
+    })
+
     res.json({
       id: user.id,
       username: user.username,
@@ -74,7 +85,11 @@ export const login = async (req, res) => {
 }
 
 export const logout = (req, res) => {
-  res.clearCookie('token')
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'none'
+  })
   res.json({ message: 'Logout' })
 }
 

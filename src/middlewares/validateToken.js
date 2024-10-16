@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
 export const authRequired = (req, res, next) => {
+  console.log('Cookies:', req.cookies) // Para ver si la cookie llega correctamente
+
   const { token } = req.cookies
 
   if (!token) {
@@ -13,7 +15,7 @@ export const authRequired = (req, res, next) => {
       return res.status(403).json({ message: 'Invalid token' })
     }
 
-    // Asignamos el ID de usuario al req.userId en lugar de sobrescribir req.user
+    console.log('Token Decoded:', decoded) // Para verificar si el token se decodifica correctamente
     req.userId = decoded.id
     next()
   })

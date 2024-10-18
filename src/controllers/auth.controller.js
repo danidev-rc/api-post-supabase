@@ -4,17 +4,10 @@ import { createAccessToken } from '../libs/jwt.js'
 import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
-const getCookieOptions = () => ({
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // esto es para que funcionenen tanto en produccion como en desarrollo
-  maxAge: 3600000
-})
-
 export const register = async (req, res) => {
-  const { email, password, username } = req.body
-
   try {
+    const { email, password, username } = req.body
+
     const userFound = await prisma.user.findUnique({
       where: { email }
     })
@@ -34,13 +27,16 @@ export const register = async (req, res) => {
 
     const token = await createAccessToken({ id: newUser.id })
 
-    res.cookie('token', token, getCookieOptions())
+    res.cookie('token', token, {
+      httpOnly: process.env.NODE_ENV === 'development',
+      secure: true,
+      sameSite: 'none'
+    })
+
     res.json({
       id: newUser.id,
       username: newUser.username,
-      email: newUser.email,
-      createdAt: newUser.createdAt,
-      updatedAt: newUser.updatedAt
+      email: newUser.email
     })
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -48,9 +44,8 @@ export const register = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-  const { email, password } = req.body
-
   try {
+    const { email, password } = req.body
     const user = await prisma.user.findUnique({
       where: { email }
     })
@@ -67,14 +62,16 @@ export const login = async (req, res) => {
 
     const token = await createAccessToken({ id: user.id })
 
-    res.cookie('token', token, getCookieOptions())
+    res.cookie('token', token, {
+      httpOnly: process.env.NODE_ENV === 'development',
+      secure: true,
+      sameSite: 'none'
+    })
 
     res.json({
       id: user.id,
       username: user.username,
-      email: user.email,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      email: user.email
     })
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -84,8 +81,8 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none'
+    secure: true,
+    expires: new Date(0)
   })
   res.json({ message: 'Logout' })
 }
@@ -116,16 +113,19 @@ export const profile = async (req, res) => {
 }
 
 export const verifyToken = async (req, res) => {
-  const token = req.cookies.token
+  const { token } = req.cookies
+  jwt.verify(token, TOKEN_SECRET, async (error, decoded) => {
+    if (error) return res.sendStatus(401)
 
-  if (!token) {
-    return res.status(401).json(['Unauthorized'])
-  }
+    const userFound = await prisma.user.findUnique({
+      where: { id: decoded.id }
+    })
+    if (!userFound) return res.sendStatus(401)
 
-  try {
-    jwt.verify(token, TOKEN_SECRET)
-    res.json({ message: 'Token is valid' })
-  } catch (err) {
-    res.status(401).json(['Unauthorized'])
-  }
+    return res.json({
+      id: userFound.id,
+      username: userFound.username,
+      email: userFound.email
+    })
+  })
 }

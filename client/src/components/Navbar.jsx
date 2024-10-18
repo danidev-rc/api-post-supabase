@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
+  console.log(isAuthenticated, user);
 
   return (
     <header className='fixed top-0 w-full z-50 bg-black text-gray-200'>
@@ -32,12 +33,13 @@ function Navbar() {
                 </Link>
               </li>
               <li>
-                <button
-                  onClick={logout}
+                <Link
+                  to='/'
+                  onClick={() => logout()}
                   className='text-sm hover:text-indigo-400 transition-colors'
                 >
                   Logout
-                </button>
+                </Link>
               </li>
             </>
           ) : (

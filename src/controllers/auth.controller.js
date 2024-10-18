@@ -84,7 +84,8 @@ export const logout = (req, res) => {
     // secure: true,
     secure: process.env.NODE_ENV === 'production', // +
     sameSite: 'none', // +
-    expires: new Date(0)
+    expires: new Date(0),
+    domain: '.onrender.com' // +
   })
   res.json({ message: 'Logout' })
 }

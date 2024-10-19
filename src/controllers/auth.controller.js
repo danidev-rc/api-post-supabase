@@ -63,11 +63,9 @@ export const login = async (req, res) => {
     const token = await createAccessToken({ id: user.id })
 
     res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'None',
-      maxAge: 1000 * 60 * 60 * 24,
-      domain: 'https://api-post-supabase.vercel.app'
+      httpOnly: process.env.NODE_ENV === 'development',
+      secure: true,
+      sameSite: 'none'
     })
 
     res.json({

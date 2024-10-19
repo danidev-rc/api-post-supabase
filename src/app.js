@@ -12,8 +12,7 @@ const app = express()
 
 app.use(cors(
   {
-    origin: 'https://api-post-supabase.vercel.app',
-    // origin: FRONTEND_URL,
+    origin: FRONTEND_URL,
     credentials: true
   }
 ))

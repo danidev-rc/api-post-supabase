@@ -28,10 +28,9 @@ export const register = async (req, res) => {
     const token = await createAccessToken({ id: newUser.id })
 
     res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
-      maxAge: 1000 * 60 * 60 * 24
+      httpOnly: process.env.NODE_ENV === 'development',
+      secure: true,
+      sameSite: 'none'
     })
 
     res.json({
@@ -66,8 +65,9 @@ export const login = async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
-      maxAge: 1000 * 60 * 60 * 24
+      sameSite: 'None',
+      maxAge: 1000 * 60 * 60 * 24,
+      domain: 'https://api-post-supabase.vercel.app'
     })
 
     res.json({
@@ -83,11 +83,11 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
+    // secure: true,
+    secure: process.env.NODE_ENV === 'production', // +
+    sameSite: 'none', // +
     expires: new Date(0)
   })
-
   res.json({ message: 'Logout' })
 }
 

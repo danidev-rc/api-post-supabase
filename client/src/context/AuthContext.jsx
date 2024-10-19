@@ -71,36 +71,34 @@ export const AuthProvider = ({ children }) => {
     }
   }, [errors]);
 
-  async function checkLogin() {
-    const cookies = Cookies.get();
-    console.log("Cookies en produccion:", cookies);
+  useEffect(() => {
+    async function checkLogin() {
+      const cookies = Cookies.get();
+      console.log("Cookies en produccion:", cookies);
 
-    if (!cookies.token) {
-      setIsAuthenticated(false);
-      setLoading(false);
-      return setUser(null);
-    }
-
-    try {
-      const res = await verifyTokenRequest(cookies.token);
-      if (!res.data) {
+      if (!cookies.token) {
         setIsAuthenticated(false);
         setLoading(false);
-        Cookies.remove("token"); // Asegúrate de eliminar el token si no es válido
-        return;
+        return setUser(null);
       }
 
-      setIsAuthenticated(true);
-      setUser(res.data);
-      setLoading(false);
-    } catch (error) {
-      setIsAuthenticated(false);
-      setUser(null);
-      setLoading(false);
-      Cookies.remove("token"); // Asegúrate de eliminar el token si ocurre un error
+      try {
+        const res = await verifyTokenRequest(cookies.token);
+        if (!res.data) {
+          setIsAuthenticated(false);
+          setLoading(false);
+          return;
+        }
+
+        setIsAuthenticated(true);
+        setUser(res.data);
+        setLoading(false);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setUser(null);
+        setLoading(false);
+      }
     }
-  }
-  useEffect(() => {
     checkLogin();
   }, []);
   return (
